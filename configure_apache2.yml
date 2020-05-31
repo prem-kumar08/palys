@@ -1,0 +1,11 @@
+- name: configuring apache2
+  hosts: all
+  tasks:
+    - name: calling from child playbooks
+      include: "{{item}}"
+      with_items:
+        - install_apache.yml
+        - edit_users.yml
+        - service_start.yml
+        - url_response.yml
+

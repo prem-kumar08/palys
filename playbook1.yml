@@ -1,0 +1,9 @@
+---
+- name: creating files
+  hosts: all
+  tasks:
+   - name: create a file
+     file:
+      name: /home/ubuntu/f1
+      state: touch
+...

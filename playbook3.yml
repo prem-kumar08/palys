@@ -1,0 +1,23 @@
+---
+- name: configuring tomcat8
+  hosts: all
+  tasks:
+    - name: install tomcat8
+      apt:
+        name: tomcat8
+        state: present
+    - name: change port 8080 to 9090
+      replace:
+        regexp: 8080
+        replace: 9090
+        path: /etc/tomcat8/server.xml
+    - name: service restart
+      service:
+        name: tomcat8
+        state: restarted
+    - name: checking working or not
+      uri:
+        url: http://35.154.61.200:9090
+    - name: checking 2nd server
+      uri:
+        url: http://52.66.76.159:9090

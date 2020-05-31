@@ -1,0 +1,31 @@
+- name: asetup of  jenkins
+  hosts: 172.31.32.218
+  tasks:
+    - name: installing git maven java
+      apt:
+       name: "{{item}}"
+       state: present
+       update_cache: yes
+      with_items:
+       - openjdk-8-jdk
+       - git
+       - maven
+    - name: install jenkins by download
+      get_url:
+       url: http://mirrors.jenkins.io/war-stable/latest/jenkins.war
+       dest: /tmp
+- name: prodserver and qa server setup
+  hosts: webserver
+  tasks:
+    - name: installing tomcat and tomcat8 admin
+      apt:
+       name: "{{item}}"
+       state: present
+       update_cache: no
+      with_items:
+       - tomcat8
+       - tomcat8-admin
+    - name: copy the user.xml file in qa and prodserver
+      copy:
+       src: tomcat-users.xml
+       dest: /etc/tomcat8      

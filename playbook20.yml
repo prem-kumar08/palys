@@ -1,0 +1,16 @@
+- name: implement in Debug in order to display output of the modules
+  hosts: all
+  tasks:
+    - name: creating user
+      user:
+        name: prem
+        password: 1234
+        home: /home/ubuntu/prem
+        uid: 9999
+        state: present
+      register: a
+    - name: displaying output
+      debug:
+        var: a
+
+

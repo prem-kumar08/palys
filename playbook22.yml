@@ -1,0 +1,19 @@
+- name: Implementing Tagging modules in  ansible
+  hosts: all
+  tasks:
+    - name: installing tree
+      apt:
+       name: tree
+       state: present
+      tags: tree_installation
+    - name: user creation
+      user:
+       name: poonam
+       password: 1234
+      tags: user_creation
+    - name: copy  a file
+      copy:
+       src: /etc/passwd
+       dest: /tmp
+
+        

@@ -1,0 +1,51 @@
+- name: setting up ci-cd environment
+  hosts: servers
+  tasks:
+    - name: install s/w applications
+      apt: 
+       name: "{{item}}"
+       state: present
+       update_cache: no
+      with_items:
+       - openjdk-8-jdk
+       - git 
+       - maven
+       - tomcat8
+       - tomcat8-admin
+- name: Download the code and create artifact
+  hosts: devserver
+  tasks:
+    - name: continous download
+      git:
+        repo: https://github.com/intelliqittrainings/maven.git
+        dest: /home/ubuntu/projectcode
+    - name: continous Build
+      shell: cd /home/ubuntu/projectcode;mvn package
+    - name: copying the artifact into the controller
+      fetch:
+        src: /home/ubuntu/projectcode/webapp/target/webapp.war
+        dest: /tmp
+- name: copy artifact into tomcat in qaserver
+  hosts: qaserver
+  tasks: 
+    - name: Continous deployment
+      copy:
+       src: /tmp/172.31.32.139/home/ubuntu/projectcode/webapp/target/webapp.war
+       dest: /var/lib/tomcat8/webapps/qaapp.war
+    - name: Dowloanding selenium programs
+      git:
+       repo: https://github.com/selenium-saikrishna/FunctionalTesting.git
+       dest: /home/ubuntu/testcode
+    - name: Execute the selenium code
+      shell: java -jar /home/ubuntu/testcode/testing.jar
+- name: Deploy the artifact into prodserver
+  hosts: prodserver
+  tasks: 
+    - name: continous delivery
+      copy: 
+       src: /tmp/172.31.32.139/home/ubuntu/projectcode/webapp/target/webapp.war
+       dest: /var/lib/tomcat8/webapps/prodapp.war
+
+
+
+

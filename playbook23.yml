@@ -1,0 +1,5 @@
+- name: implementing include module by calling child module in parent module
+  hosts: all
+  tasks:
+    - name: call child playbook
+      include: child23.yml

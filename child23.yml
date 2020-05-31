@@ -1,0 +1,5 @@
+- name: create a directory
+  file:
+    name: /home/ubuntu/dir1
+    state: directory
+

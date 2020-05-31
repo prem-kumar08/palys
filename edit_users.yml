@@ -1,0 +1,4 @@
+- name: Edit the users.xml
+  copy:
+   content: "welcome to apache\n"
+   dest: /var/www/html/index.html

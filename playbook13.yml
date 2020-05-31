@@ -1,0 +1,21 @@
+- name: creating multiple users and directories
+  hosts: all
+  tasks:
+     - name: creating multiple users
+       user:
+         name: "{{item.a}}"
+         password: "{{item.b}}"
+         home: "{{item.c}}"
+       with_items:
+         - {a: anu,b: zxyz,c: /home/anu}
+         - {a: shruthi,b: zxyz,c: /home/ubuntu/shruthi}
+     - name: creating directories
+       file:
+         name: "{{item.a}}"
+         state: "{{item.b}}"
+       with_items:
+         - {a: /home/anu/f1,b: touch}
+         - {a: /home/ubuntu/shruthi/dir1,b: directory}
+           
+
+

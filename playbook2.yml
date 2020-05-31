@@ -1,0 +1,12 @@
+---
+- name: install git and clone
+  hosts: all
+  tasks:
+   - name: install git
+     apt: 
+      name: git
+      state: present
+   - name: clone a respository
+     git:
+      repo: https://github.com/intelliqittrainings/maven.git
+      dest: /home/ubuntu/maven

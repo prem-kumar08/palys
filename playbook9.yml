@@ -1,0 +1,8 @@
+- name: installing tree using host variables
+  hosts: 172.31.45.213
+  tasks:
+     - name: Install tree
+       apt:
+        name: "{{a}}"
+        state: "{{b}}"
+        update_cache: "{{c}}"

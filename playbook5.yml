@@ -1,0 +1,8 @@
+- name: Install/Uninstall software applications
+  hosts: all
+  tasks:
+    - name: Install/uninstall
+      apt:
+       name: "{{a}}"
+       state: "{{b}}"
+       update_cache: "{{c}}"

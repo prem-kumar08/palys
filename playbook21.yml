@@ -1,0 +1,16 @@
+ - name: implementing stat  module by checking whthet file exists or not if not execute module or else no
+   hosts: all
+   tasks:
+     - name: checking files exists or not
+       stat:
+        path: /home/ubuntu/f1
+       register: a
+     - name: printing output
+       debug:
+        var: a
+     - name: create a file
+       file:
+         name: /home/ubuntu/f1
+         state: touch
+       when: a.stat.exists == false
+

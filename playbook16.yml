@@ -1,0 +1,25 @@
+- name: implementing handlers
+  hosts: all
+  tasks:
+    - name: install apache2
+      apt:
+       name: apache2
+       state: present
+       update_cache: no
+      notify: check url response
+    - name: changing index.html
+      copy:
+       content: "welcome to apache\n"
+       dest: /var/www/html/index.html
+  handlers:
+    - name: apache2 restart
+      service:
+       name: apache2
+       state: restarted
+    - name: check url response
+      uri:
+       url: "{{item}}"
+      with_items:
+       - http://172.31.32.139
+       - http://172.31.43.160
+       - http://172.31.45.213       
